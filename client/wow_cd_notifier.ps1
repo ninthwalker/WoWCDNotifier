@@ -1,6 +1,6 @@
 ﻿####################### WoW Cooldown Notifier ##########################
 # Name: WoW Cooldown Notifier                                          #
-# Desc: Sends Discord Notifications when your WoW Crafting Cooldown up #
+# Desc: Sends Discord Notifications when WoW Crafting Cooldowns are up #
 # Author: Ninthwalker                                                  #
 # Instructions: https://github.com/ninthwalker/WoWCDNotifier           #
 # Date: 06OCT2022                                                      #
@@ -63,7 +63,7 @@ $token = "your unique key here"
 $alertTime = 180
 
 # Interval
-# how often do you want to keep bing alerted? Setting this to $True will keep alerting you every $intervalTime (in minutes, lowest value is 10, and maximum would be the $alertTime you set above)
+# how often do you want to keep being alerted? Setting this to $True will keep alerting you every $intervalTime (in minutes, lowest value is 10, and maximum would be the $alertTime you set above)
 # ie: if $alertTime is set to 180 (3hrs) and you set this to 60, you would receive an alert 3hrs before, then every hour after.
 # set interval to $True to enable or $False to only alert once when the $alertTime is met.
 # default is $False
@@ -87,7 +87,7 @@ $scriptPath = $MyInvocation.MyCommand.Path
 # create scheduled task if it does not exist
 # uses this code to create the task for you. Using WScript.Shell and mshta to prevent ps window from showing. Other methods woudl require additional user input that is not as user friendly as this.
 Function New-CdTask {
-    $taskInterval = (New-TimeSpan -Minutes 60)
+    $taskInterval = (New-TimeSpan -Minutes 30)
     $taskTrigger = New-ScheduledTaskTrigger -Once -At 00:00 -RepetitionInterval $taskInterval
     #$taskUser = (Get-CimInstance -ClassName Win32_ComputerSystem).Username
     #$creds = Get-Credential -Credential $taskUser #use this if the default task action below does not work
@@ -138,36 +138,39 @@ if ( ($proc -eq 'explorer') -or ($proc -eq 'powershell') ) {
 # save path
 $path = "$env:TEMP\cdInfo.csv"
 
-#check task
-New-Check
-if ($checkTask) {
+# only run this section if its NOT being run from the scheduled task
+if ($canToast) {
+    #check task
+    New-Check
+    if ($checkTask) {
     
-    if ($task -notlike "*$scriptPath*") {
-        # task path is bad, delete and re-create
-        Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
-        Start-Sleep -Seconds 1
+        if ($task -notlike "*$scriptPath*") {
+            # task path is bad, delete and re-create
+            Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+            Start-Sleep -Seconds 1
+            New-CdTask
+            Start-Sleep -Seconds 1
+            New-Check
+            if ($checkTask -and $canToast) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
+            else {
+                if ($canToast) {New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"}
+            }
+
+        }
+        else {
+            # already configured correctly
+            if ($canToast) {New-PopUp -msg "Setup was already completed. Have fun!" -icon "Info"}
+        }
+    }
+    else {
         New-CdTask
         Start-Sleep -Seconds 1
         New-Check
+        Start-Sleep -Seconds 1
         if ($checkTask -and $canToast) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
         else {
             if ($canToast) {New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"}
         }
-
-    }
-    else {
-        # already configured correctly
-        if ($canToast) {New-PopUp -msg "Setup was already completed. Have fun!" -icon "Info"}
-    }
-}
-else {
-    New-CdTask
-    Start-Sleep -Seconds 1
-    New-Check
-    Start-Sleep -Seconds 1
-    if ($checkTask -and $canToast) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
-    else {
-        if ($canToast) {New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"}
     }
 }
 
@@ -249,8 +252,8 @@ if ($cdInfo) {
     #$form = @{
     #    data = Get-Item -Path $path
     #}
-    #$upload = Invoke-WebRequest -Uri wowcd.ninthwalker.app/upload?key=$token -Method Post -Form $form
-    $upload = curl.exe --silent -XPOST -F "data=@$path" https://wowcd.ninthwalker.app/upload?key=$token
+    #$upload = Invoke-WebRequest -Uri wowcd.ninthwalker.dev?/upload?key=$token -Method Post -Form $form
+    $upload = curl.exe --silent -XPOST -F "data=@$path" https://wowcd.ninthwalker.dev/upload?key=$token
     # update modtime to use for existing checks
     if ($upload -eq "Upload successful") {
         $lastFileUpdate = (Get-Item $waLuaPath).LastWriteTime
