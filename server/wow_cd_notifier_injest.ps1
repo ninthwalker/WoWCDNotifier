@@ -1,4 +1,4 @@
-# WOTLK Cooldown Alerter
+# WOW Cooldown Alerter
 # Author: Ninthwalker
 # Last Modified: 06OCT2022
 # Used in conjunction with this WA: https://wago.io/sluyr3nQ8
