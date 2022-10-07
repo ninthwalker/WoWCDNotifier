@@ -59,7 +59,7 @@ foreach ($cd in $cdInfo) {
     if ( ($diff.TotalMinutes -ge $bugMe) -and ($diff.TotalMinutes -le $cd.alertTime) ) {
         # Send discord alert. Less than $alertTime until CD is ready! Also need to check if there is no time or its off cd type situation. -UFormat %r if we just want the time and not date. Time is UTC now to use UTC from remote computer.
         # newline also works with: $(0x0A -as [char])
-        if ( ($cd.keepBuggingMe -eq $True) -and ($diff -le 0) -and ($cd.interval -eq $True) -and ($diff.TotalMinutes%$cd.intervalTime -ge 10)) {
+        if ( ($cd.keepBuggingMe -eq $True) -and ($diff -le 0) -and ($cd.interval -eq $True) -and ($diff.TotalMinutes%$cd.intervalTime -ge -10)) {
             New-Alert -discordId $cd.discordId -icon $cd.Icon -title "$($cd.name) Cooldown is ready!" -color "GREEN" -msg "**Time is money, friend!**$(0x0A -as [char])**Was Ready At:** $(Get-Date $localTime -F g)" -link $cd.link -realm $cd.Realm -char $cd.char
         }
         elseif ( ($cd.interval -eq $True) -and ($diff -ge 0) -and ($diff.TotalMinutes -le $cd.alertTime) -and ($diff.TotalMinutes%$cd.intervalTime -le 10) ) {
