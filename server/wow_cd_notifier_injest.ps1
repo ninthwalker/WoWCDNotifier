@@ -6,6 +6,8 @@
 # Run this as a Windows Scheduled Task
 # run it to check peoples alerts every 10min. Code below is set for this 10 min interval. May need to adjust slightly for a buffer window as it could miss if its too exact possibly.
 # task arguments: -executionpolicy bypass -noprofile -nologo -windowstyle hidden -File "..\wow_cd_notifier_injest.ps1"
+# using this upload docker. could replace this and use whatever upload method is preferable though.
+# https://github.com/ninthwalker/docker-simple-file-upload
 ##################################
 
 #####################################
