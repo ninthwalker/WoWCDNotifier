@@ -2,10 +2,10 @@
 <img align="center" src="https://raw.githubusercontent.com/ninthwalker/WoWCDNotifier/main/img/wotlk_icon.png" width="250"></p>
 
 # WoW CD Notifier
-## WOTLK Classic Cooldown Notifications  
+**WOTLK Classic Cooldown Notifications**  
 
 Sends a discord notification when a crafting cooldown is availble to use.  
-ie: Titansteel, Spellcloth, Brilliant Glass, etc.  
+Current Cooldowns include: Titansteel, Spellcloth, Brilliant Glass, ..  
 
 ## Details/Requirements
 1. Windows 10 (version 17063 [April 2018 update]) or higher
@@ -27,10 +27,10 @@ If you don't want to have your data uploaded, then you can run the standalone ve
 
 I tried to make it as simple as possible, but there are a few steps you need to do to have this work.  
 
-1. Install the [weak auras addon](https://www.curseforge.com/wow/addons/weakauras-2) and then import this cooldown tracker addon here: [](https://wago.io/sluyr3nQ8)  
+1. Install the [weak auras addon](https://www.curseforge.com/wow/addons/weakauras-2) and then import this cooldown tracker addon here: [https://wago.io/sluyr3nQ8](https://wago.io/sluyr3nQ8)  
 
 2. Join WoW CD Notifier Discord and join the #get-a-token channel. Here you can request a unique token to use for your notifications. You also must stay in this server to allow the bot to be able to direct message you for notifications.
-Discord Server Invite link: [](https://discord.gg/m3kG5qbtvy)   
+Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)   
 
 3. Download this repo to your computer:  
   a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
@@ -47,7 +47,7 @@ If everything is set up correctly, then you will start to receive a discord dire
 
 ## Standalone Version - Setup Instructions  
 
-1. Install the [weak auras addon](https://www.curseforge.com/wow/addons/weakauras-2) and then import this cooldown tracker addon here: [](https://wago.io/sluyr3nQ8)  
+1. Install the [weak auras addon](https://www.curseforge.com/wow/addons/weakauras-2) and then import this cooldown tracker addon here: [https://wago.io/sluyr3nQ8](https://wago.io/sluyr3nQ8)  
 
 2. Create a Discord Webhook for the channel you want to use for notifications.  
 
@@ -55,12 +55,20 @@ If everything is set up correctly, then you will start to receive a discord dire
 
 5. After you have configured the settings.txt file, Double click the 'Setup WoW CD Notifier - Standalone' shortcut. This will create a scheduled task on your computer that will send you a discord message when your cooldows are ready.  
 
+## Uninstall  
+
+1. Doubleclick the 'Uninstall WoW CD Notifier' shortcut link. This will remove the scheduled task.
+
+
 ## FAQ/Common Issues  
+
 1. This code is public and available for review. The Data submitted to the server does not contain any personal information, only the crafting cooldown data and your discordID so we know who to send the notification to. If you have an issue with this, then this app probably is not for you. Or you can use the Standalone version if you have a computer on all the time. That is self-contained and does not upload any data.  
 
-2. If you would like the data that is uploaded (cooldown data and discordID) removed at any time, join the WoW CD Notifier discord and make a request in the #support channel. Discord Invite: [](https://discord.gg/m3kG5qbtvy)  
+2. If you would like the data that is uploaded (cooldown data and discordID) removed at any time, join the WoW CD Notifier discord and make a request in the #support channel. Discord Invite: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
  
-3. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.
+3. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
+
+4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us on the discord server for other help. Thanks!
 
 ## Screenshots & Videos  
 coming soon
