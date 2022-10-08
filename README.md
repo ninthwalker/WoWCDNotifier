@@ -66,7 +66,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 1. If you want to change the settings, you can do so at any time and the next time the scheduled task runs, it will pick up the new settings.  
 
-2. If you want to chaneg the location of the files, it is best to first to an Uninstall (as noted above), then move the files to the new location, and then double click the 'Setup WoW CD Notifier' shortcut from the new location.  
+2. If you want to change the location of the files, move the files to the new location, and then double click the 'Setup WoW CD Notifier' shortcut again from the new location to have the scheduled task updated with the new location.  
 
 ## FAQ/Common Issues  
 
