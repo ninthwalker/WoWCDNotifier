@@ -35,7 +35,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 3. Download this repo to your computer:  
   a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
   b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
-  c. Extract the contents of the ZIP file. The 2 files you want are in the 'Client' folder. Make sure these 4 files are kept in the same directory wherever you move them to.  
+  c. Extract the contents of the ZIP file. The 4 files you want are in the 'Client' folder. Make sure these 4 files are kept in the same directory wherever you move them to.  
 
 4. Open up the settings.txt file and configure as noted in the settings file or see down below in the #settings section. Save the file when completed.  
 
@@ -47,7 +47,12 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 1. Install the [weak auras addon](https://www.curseforge.com/wow/addons/weakauras-2) and then import this cooldown tracker addon here: [https://wago.io/sluyr3nQ8](https://wago.io/sluyr3nQ8)  
 
-2. Create a Discord Webhook for the channel you want to use for notifications.  
+2. Download this repo to your computer:  
+  a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
+  b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
+  c. Extract the contents of the ZIP file. The 4 files you want are in the 'Standalone' folder. Make sure these 4 files are kept in the same directory wherever you move them to.   
+  
+3. Create a Discord Webhook for the channel you want to use for notifications.  
 
 3. Open up the settings.txt file and configure as noted in the settings file or see down below in the #settings section. Save the file when completed.  
 
@@ -57,6 +62,11 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 1. Doubleclick the 'Uninstall WoW CD Notifier' shortcut link. This will remove the scheduled task.
 
+## Reconfigure
+
+1. If you want to change the settings, you can do so at any time and the next time the scheduled task runs, it will pick up the new settings.  
+
+2. If you want to chaneg the location of the files, it is best to first to an Uninstall (as noted above), then move the files to the new location, and then double click the 'Setup WoW CD Notifier' shortcut from the new location.  
 
 ## FAQ/Common Issues  
 
