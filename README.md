@@ -1,5 +1,6 @@
 <p align="center">
-<img align="center" src="https://raw.githubusercontent.com/ninthwalker/WoWCDNotifier/main/img/wotlk_icon.png" width="250"></p>  
+<img align="center" src="https://raw.githubusercontent.com/ninthwalker/WoWCDNotifier/main/img/wotlk_icon.png" width="250"></p>
+
 # WoW CD Notifier  
 ## WOTLK Classic Cooldown Notifications  
 
@@ -16,10 +17,10 @@ ie: Titansteel, Spellcloth, Brilliant Glass, etc.
 This script is utilized in conjunction with a weak aura. The script reads the weak aura cooldown data and uses that for notifications. Pretty simple.
 There are 2 versions:  
 
-1. Client version:
+1. **Client version:**  
 This one can be used without you needing to leave your computer on all the time. It will upload the cooldown data to a secure server (similar to TSM or Warcraft Logs desktop clients) that will then notify you when cooldowns are ready.  
 
-2. Standalone Version.  
+2. **Standalone Version.**  
 If you don't want to have your data uploaded, then you can run the standalone version. This does however require your computer to be turned on so it can send you the notifications.
 
 ## Client Version - Setup Instructions  
