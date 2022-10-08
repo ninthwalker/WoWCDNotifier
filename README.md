@@ -1,8 +1,8 @@
 <p align="center">
-<img align="center" src="https://raw.githubusercontent.com/ninthwalker/WoWCDNotifier/main/img/wotlk_icon.png" width="250"></p>
+<img align="center" src="https://raw.githubusercontent.com/ninthwalker/WoWCDNotifier/main/img/wotlk_icon.png" width="250">
 
 # WoW CD Notifier
-**WOTLK Classic Cooldown Notifications**  
+**WOTLK Classic Cooldown Notifications**  </p>
 
 Sends a discord notification when a crafting cooldown is availble to use.  
 Current Cooldowns include: Titansteel, Spellcloth, Brilliant Glass, ..  
@@ -34,16 +34,14 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 3. Download this repo to your computer:  
   a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
-  b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet.  
-  `Right click > Properties > Check 'Unblock'`  
+  b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
   c. Extract the contents of the ZIP file. The 2 files you want are in the 'Client' folder. Make sure these 4 files are kept in the same directory wherever you move them to.  
 
 4. Open up the settings.txt file and configure as noted in the settings file or see down below in the #settings section. Save the file when completed.  
 
 5. After you have configured the settings.txt file, Double click the 'Setup WoW CD Notifier' shortcut. This will create a scheduled task on your computer that will run once an hour to upload the cooldown data for notifications.  
 
-6. That's it!  
-If everything is set up correctly, then you will start to receive a discord direct message from the bot according to your cooldowns and the settings you configured.
+6. That's it! If everything is set up correctly, then you will start to receive a discord direct message from the bot according to your cooldowns and the settings you configured.
 
 ## Standalone Version - Setup Instructions  
 
