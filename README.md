@@ -31,7 +31,7 @@ I tried to make it as simple as possible, but there are a few steps you need to 
 2. Join WoW CD Notifier Discord and join the #get-a-token channel. Here you can request a unique token to use for your notifications. You also must stay in this server to allow the bot to be able to direct message you for notifications.
 Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)   
 
-3. Download this repo to your computer:  
+3. Download this Github repo to your computer:  
   a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
   b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
   c. Extract the contents of the ZIP file. The files you want are in the 'Client' folder. Make sure these files are kept in the same directory wherever you move them to.  
@@ -65,6 +65,11 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 2. If you want to change the location of the files, move the files to the new location, and then double click the 'Install WoW CD Notifier' shortcut again from the new location to have the scheduled task updated with the new location.  
 
+
+## Settings
+
+Please see the sample file for all settings and descriptions for them here: [Sample Settings File](https://github.com/ninthwalker/WoWCDNotifier/blob/main/client/wow_cd_notifier_settings_sample.txt)  
+
 ## FAQ/Common Issues  
 
 1. This code is public and available for review. The Data submitted to the server does not contain any personal information, only the crafting cooldown data and your discordID so we know who to send the notification to. If you have an issue with this, then this app probably is not for you. Or you can use the Standalone version if you have a computer on all the time. That is self-contained and does not upload any data.  
@@ -73,7 +78,9 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
  
 3. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
 
-4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!
+4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!  
+
+5. https://github.com/ninthwalker/WoWCDNotifier/blob/main/client/wow_cd_notifier_settings_sample.txt
 
 ## Screenshots & Videos  
 coming soon
