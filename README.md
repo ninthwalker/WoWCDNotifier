@@ -9,7 +9,7 @@ Current Cooldowns include: Titansteel, Spellcloth, Brilliant Glass, ..
 
 ## Details/Requirements
 1. Windows 10 (version 17063 [April 2018 update]) or higher
-2. World of Warcraft
+2. World of Warcraft w/ WeakAuras Addon
 3. Discord
 
 ## How it works
@@ -80,7 +80,7 @@ Please see the sample file for all settings and descriptions for them here: [Sam
 
 4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!  
 
-5. https://github.com/ninthwalker/WoWCDNotifier/blob/main/client/wow_cd_notifier_settings_sample.txt
+5. Get additional help in the WoW CD Notifier Discord server: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
 
 ## Screenshots & Videos  
-coming soon
+coming soon. Maybe. =)
