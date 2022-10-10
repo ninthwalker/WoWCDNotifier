@@ -9,9 +9,8 @@ Current Cooldowns include: Titansteel, Spellcloth, Brilliant Glass, ..
 
 ## Details/Requirements
 1. Windows 10 (version 17063 [April 2018 update]) or higher
-2. Powershell 3.0+ (Comes with WIN10)
-3. A World of Warcraft Subscription. (You have to put this on your WIN 10 computer yourself)
-4. Discord
+2. World of Warcraft
+3. Discord
 
 ## How it works
 This script is utilized in conjunction with a weak aura. The script reads the weak aura cooldown data and uses that for notifications. Pretty simple.
@@ -35,13 +34,11 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 3. Download this repo to your computer:  
   a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
   b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
-  c. Extract the contents of the ZIP file. The 4 files you want are in the 'Client' folder. Make sure these 4 files are kept in the same directory wherever you move them to.  
+  c. Extract the contents of the ZIP file. The files you want are in the 'Client' folder. Make sure these files are kept in the same directory wherever you move them to.  
 
-4. Open up the settings.txt file and configure as noted in the settings file or see down below in the #settings section. Save the file when completed.  
+4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.  
 
-5. After you have configured the settings.txt file, Double click the 'Setup WoW CD Notifier' shortcut. This will create a scheduled task on your computer that will run once an hour to upload the cooldown data for notifications.  
-
-6. That's it! If everything is set up correctly, then you will start to receive a discord direct message from the bot according to your cooldowns and the settings you configured.
+5. After you have configured the settings file, Double click the 'Install WoW CD Notifier' shortcut. This will create a scheduled task on your computer that will check every 30 minutes for new cooldown times and upload the cooldown data to send you Discord notifications when your cooldowns are ready.  
 
 ## Standalone Version - Setup Instructions  
 
@@ -50,13 +47,13 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 2. Download this repo to your computer:  
   a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
   b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
-  c. Extract the contents of the ZIP file. The 4 files you want are in the 'Standalone' folder. Make sure these 4 files are kept in the same directory wherever you move them to.   
+  c. Extract the contents of the ZIP file. The files you want are in the 'Standalone' folder. Make sure these files are kept in the same directory wherever you move them to.   
   
 3. Create a Discord Webhook for the channel you want to use for notifications.  
 
-3. Open up the settings.txt file and configure as noted in the settings file or see down below in the #settings section. Save the file when completed.  
+4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.   
 
-5. After you have configured the settings.txt file, Double click the 'Setup WoW CD Notifier - Standalone' shortcut. This will create a scheduled task on your computer that will send you a discord message when your cooldows are ready.  
+5. After you have configured the settings.txt file, Double click the 'Install WoW CD Notifier - Standalone' shortcut. This will create a scheduled task on your computer that will send you a discord message when your cooldows are ready.  
 
 ## Uninstall  
 
@@ -66,7 +63,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 1. If you want to change the settings, you can do so at any time and the next time the scheduled task runs, it will pick up the new settings.  
 
-2. If you want to change the location of the files, move the files to the new location, and then double click the 'Setup WoW CD Notifier' shortcut again from the new location to have the scheduled task updated with the new location.  
+2. If you want to change the location of the files, move the files to the new location, and then double click the 'Install WoW CD Notifier' shortcut again from the new location to have the scheduled task updated with the new location.  
 
 ## FAQ/Common Issues  
 
@@ -76,7 +73,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
  
 3. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
 
-4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us on the discord server for other help. Thanks!
+4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!
 
 ## Screenshots & Videos  
 coming soon
