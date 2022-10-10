@@ -3,10 +3,8 @@
 # Last Modified: 06OCT2022
 # Used in conjunction with this WA: https://wago.io/sluyr3nQ8
 # Instructions:
-# Run this as a Windows Scheduled Task
 # this should be called from the cdNotifierBot.js but can technically run it outside of that as well
-# run it to check peoples alerts every 10min. Code below is set for this 10 min interval. May need to adjust slightly for a buffer window as it could miss if its too exact possibly.
-# task arguments: -executionpolicy bypass -noprofile -nologo -windowstyle hidden -File "..\wow_cd_notifier_injest.ps1"
+# run it to check peoples alerts every 10min. (js discord file does this) Code below is set for this 10 min interval. May need to adjust slightly for a buffer window as it could miss if its too exact possibly.
 ##################################
 
 #####################################
