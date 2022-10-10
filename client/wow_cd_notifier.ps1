@@ -3,8 +3,8 @@
 # Desc: Sends Discord Notifications when WoW Crafting Cooldowns are up #
 # Author: Ninthwalker                                                  #
 # Instructions: https://github.com/ninthwalker/WoWCDNotifier           #
-# Date: 06OCT2022                                                      #
-# Version: 1.1                                                         #
+# Date: 10OCT2022                                                      #
+# Version: 1.2                                                         #
 ########################################################################
 
 ############################ CHANGE LOG ################################
@@ -13,87 +13,57 @@
 ## 1.1                                                                 #
 # Add windows notifications for some events when run manually          #
 # Refactor mappings                                                    #
+## 1.2                                                                 #
+# Use settings file, I think it is easier for the end user             #
 ########################################################################
  
 ########################## NOTES FOR USER ##############################
+# Used with wow_cd_notifier_settings.txt                               #
 # Used in conjunction with this WA: https://wago.io/sluyr3nQ8          #
 # Join the WoW CD Notifier discord: https://discord.gg/m3kG5qbtvy      #
-# Please follow directions on the githib site!                         #
 # What this does:                                                      #
 # Creates a scheduled task on your computer that will upload your wow  #
 #  cooldown information to a secure server to process                  #
 # This information can then be used to send you an alert in discord    #
 #  when your cooldown is ready even when your computer is not on.      #
-# Additional Info:                                                     #
-# If making the task manually make sure to name the task exactly       #
-# "WoW CD Notifier" since this script will check for that name.        #
-# Task Arguments: -executionpolicy bypass -noprofile -nologo           #
-# -windowstyle hidden                                                  #
-# -File "C:\your_file_path_to-script_here\wow_cd_notifier.ps1"         #
-# Also 'run whether user is logged in or not' to prevent ps flash      #
 ########################################################################
-
-########################################################################
-#########             Enter your settings below                #########
-########################################################################
-
-# Enter the full path to the WeakAuras.lua file on your computer
-# normally under: ..\World of Warcraft\_classic_\WTF\Account\<ACCOUNT_NAME>\SavedVariables\WeakAuras.lua"
-$waLuaPath = "your weak aura lua path here"
-
-# Enter in the realm name(s) to check. Add more with a comma and the next name in quotes. ie: ("Whitemane,"Skyfury","etc")
-$realmNames = ("your server name")
-
-# Enter in the character name(s) to check for cooldowns
-# Only enter each character name once. ie: if you have a character named 'Joe' on realm1 and realm2 to check, only list 'Joe' once below.
-# ie for one char: ("SliceAndDice")
-# ie for multiple char's: ("SliceAndDice","MySecondToon", "ImAnAltaholic") 
-$charNames = ("your char name(s)")
-
-# Discord
-# Set your discord ID (not username) so the bot can DM you when your CD is ready according to your alert settings below
-# ie: "364629917848719580". You can get this yourself from your discord client, or when you request a token in the WoW CD Notifier discord server, it can be given to you then.
-$discordId = "your discord id"
-
-# Upload file key. Unique for each user. Request one from the discord server: https://discord.gg/m3kG5qbtvy
-$token = "your unique key here"
-
-# Enter time (in minutes) for how far before your CD is ready to start alerting you.
-# defailt is to alert 3 hrs before your CD is ready (180 min)
-$alertTime = 180
-
-# Interval
-# how often do you want to keep being alerted? Setting this to $True will keep alerting you every $intervalTime (in minutes, lowest value is 10, and maximum would be the $alertTime you set above)
-# ie: if $alertTime is set to 180 (3hrs) and you set this to 60, you would receive an alert 3hrs before, then every hour after.
-# set interval to $True to enable or $False to only alert once when the $alertTime is met.
-# default is $False
-$interval = $False
-$intervalTime = 60
-
-# Continous alerting. Set $keepBuggingMe to $True if you want an alert every set $intervalTime even after your cooldown is ready. Will keep bugging you for each interval up to one day past it's CD.
-# this requires that $interval is set above to $True
-# default is $False
-$keepBuggingMe = $False
 
 ########################################################################
 ########            Do not Modify anything below this          #########
 ########################################################################
 
+# uninstall switch
+param ([switch]$removeTask, [switch]$runFromTask)
 
-# path of this script
-$scriptPath = $MyInvocation.MyCommand.Path
+# paths of this script
+$scriptDir = $PSScriptRoot
+$scriptPath = $PSCommandPath
+if (!$scriptDir) {$scriptDir = (Get-Location).path}
+if (!$scriptPath) {($scriptPath = "$(Get-Location)\wow_cd_notifier.ps1")}
+$cdPath = "$scriptDir\cdInfo.csv"
 
-# Functions
+# Import settings
+Function Get-Settings ([string]$fileName) {
+    $data = New-Object PSCustomObject
+    switch -regex -file $fileName {
+        "^\s*([^#]+?)\s*=\s*(.*)" { # recognize a property
+            $name,$value = $matches[1..2]
+            $data | Add-Member -Type NoteProperty -Name $name -Value $value
+        }
+    }
+    $data
+}
+$set = Get-Settings $scriptDir\wow_cd_notifier_settings.txt
+
+if ($set.realmNames -like '*,*') { $set.realmNames = $set.realmNames.Split(',') }
+if ($set.charNames -like '*,*') { $set.charNames = $set.charNames.Split(',') }
+
 # create scheduled task if it does not exist
-# uses this code to create the task for you. Using WScript.Shell and mshta to prevent ps window from showing. Other methods woudl require additional user input that is not as user friendly as this.
+# uses this code to create the task for you:
 Function New-CdTask {
     $taskInterval = (New-TimeSpan -Minutes 30)
-    $taskTrigger = New-ScheduledTaskTrigger -Once -At 00:00 -RepetitionInterval $taskInterval
-    #$taskUser = (Get-CimInstance -ClassName Win32_ComputerSystem).Username
-    #$creds = Get-Credential -Credential $taskUser #use this if the default task action below does not work
-    #$taskPass = $creds.GetNetworkCredential().Password #use this if the default task action below does not work
-    #$taskAction = New-ScheduledTaskAction -Execute powershell.exe -Argument -executionpolicy bypass -noprofile -nologo -windowstyle hidden -File $scriptPath #use this if the default task action below does not work
-    $taskAction = New-ScheduledTaskAction -Execute 'mshta' -Argument $taskArgs
+    $taskTrigger  = New-ScheduledTaskTrigger -Once -At 00:00 -RepetitionInterval $taskInterval
+    $taskAction   = New-ScheduledTaskAction -Execute 'mshta' -Argument $taskArgs
     $taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -StartWhenAvailable -DontStopIfGoingOnBatteries
     Register-ScheduledTask -TaskName $taskName -Action $taskAction -Trigger $taskTrigger -Settings $taskSettings -Description "Sends a discord alert for WoW Profession Cooldowns"
 }
@@ -101,10 +71,7 @@ Function New-CdTask {
 #toast notifications - only shown when this is run manually or from shortcut to help with debugging/status
 Function New-PopUp {
 
-    param (
-        [string]$msg,
-        [string]$icon
-    )
+    param ([string]$msg, [string]$icon)
 
     [reflection.assembly]::loadwithpartialname('System.Windows.Forms') | Out-Null
     $notify = new-object system.windows.forms.notifyicon
@@ -116,127 +83,156 @@ Function New-PopUp {
 
 $taskName = "WoW CD Notifier"
 $taskArgs =  @"
-vbscript:Execute("CreateObject(""WScript.Shell"").Run ""powershell -ExecutionPolicy Bypass & '$scriptPath'"", 0:close")
+vbscript:Execute("CreateObject(""WScript.Shell"").Run ""powershell -ExecutionPolicy Bypass & '$scriptPath' -runFromTask"", 0:close")
 "@
 
 Function New-Check {
     try {
         $script:task = (get-ScheduledTask -TaskName $taskName -ErrorAction Stop).actions.arguments
         $script:checkTask = $True
-    }
-    catch {
+    } catch {
         $script:checkTask = $False
     }
 }
 
 # check if running from task scheduler to not use toast notifications
-$proc = (Get-Process -Id (Get-CimInstance Win32_Process -Filter "ProcessID = $pid").ParentProcessId).Name
-if ( ($proc -eq 'explorer') -or ($proc -eq 'powershell') ) {
-    $canToast = $True
+if (!$runFromTask) {$canToast = $True}
+
+# verify settings before moving on
+$settingsCheck = $set.PSObject.Properties | % { if ($_.value -eq "") {$_.name} }
+if ($settingsCheck) {
+    if ($canToast) {New-PopUp -msg "Missing Settings! Please fix $settingsCheck" -icon "Warning"}
+    Return
 }
 
-# save path
-$path = "$env:TEMP\cdInfo.csv"
+# remove task when used from shortcut w/ switch
+if ($removeTask) {
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+    Start-Sleep -Seconds 1
+    New-Check
+    if ($checkTask -and $canToast) {New-PopUp -msg "Uninstall Failed. Please manually check and remove scheduled task" -icon "Warning"}
+    elseif (!$checkTask -and $canToast) {
+        New-PopUp -msg "Uninstall completed! Scheduled task removed" -icon "Info"
+    }
+    Return
+}
 
-# only run this section if its NOT being run from the scheduled task
+# only run this section if its NOT being run from the scheduled task. sets up the scheduled task
 if ($canToast) {
+
     #check task
     New-Check
     if ($checkTask) {
     
-        if ($task -notlike "*$scriptPath*") {
+        if ($task -ne $taskArgs) {
             # task path is bad, delete and re-create
             Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
             Start-Sleep -Seconds 1
             New-CdTask
             Start-Sleep -Seconds 1
             New-Check
-            if ($checkTask -and $canToast) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
-            else {
-                if ($canToast) {New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"}
+            if ( ($checkTask -eq $taskArgs) -and $canToast) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
+            elseif ($canToast) {
+                New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"
             }
 
         }
-        else {
+        elseif ( ($task -eq $taskArgs) -and $canToast) {
             # already configured correctly
-            if ($canToast) {New-PopUp -msg "Setup was already completed. Have fun!" -icon "Info"}
+            New-PopUp -msg "Setup was already completed. Have fun!" -icon "Info"
         }
-    }
-    else {
+    } else {
         New-CdTask
         Start-Sleep -Seconds 1
         New-Check
         Start-Sleep -Seconds 1
-        if ($checkTask -and $canToast) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
-        else {
-            if ($canToast) {New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"}
+        if ( ($task -eq $taskArgs) -and $canToast ) {New-PopUp -msg "Setup completed successfully. Have fun!" -icon "Info"}
+        elseif ($canToast) {
+            New-PopUp -msg "Setup FAILED! Join the discord for help" -icon "Warning"
         }
     }
 }
 
 #only run the rest of code if the file has changed since our last upload
 Try {
-    $lastFileUpdate = (Get-Item $waLuaPath -ErrorAction Stop).LastWriteTime
-    $lastUpload = (Get-Item $path).LastWriteTime
+    $lastFileUpdate = (Get-Item $set.waLuaPath -ErrorAction Stop).LastWriteTime
+} Catch {
+    if ($canToast) {New-PopUp -msg "Issue with weakauras file. Check that addon is installed and WA path is correct" -icon "Warning"}
+    Return
 }
-Catch {
-    if ($canToast) {New-PopUp -msg "Issue with weakauras file. Check that addon is installed and WA path is correct " -icon "Warning"}
+Try {
+    $lastUpload = (Get-Item $cdPath -ErrorAction SilentlyContinue).LastWriteTime
+} Catch {
+    # continue
 }
-if ($lastFileUpdate -eq $lastUpload) {
+
+if ( $lastFileUpdate -and $lastUpload -and ($lastFileUpdate -eq $lastUpload) ) {
     # no reason to upload
-    if ($canToast) {
-        New-PopUp -msg "Cooldown Data was already uploaded. Nothing new" -icon "Info"
-        Return
-    }
+    if ($canToast) { New-PopUp -msg "Cooldown Data was already uploaded. Nothing new" -icon "Info"}
+    Return
 }
 
 # cd mappings
-$cooldownName = @('Spellcloth','Shadowcloth','Primal Mooncloth','Primal Might','Brilliant Glass','Ebonweave','Moonshroud','Spellweave','Titansteel')
-$cooldownID = @(31373,36686,26751,29688,47280,56002,56001,56003,55208)
-$cooldownIcon =@('inv_fabric_spellfire.jp','inv_fabric_felcloth_ebon.jpg','inv_fabric_moonrag_primal.jpg','spell_nature_lightningoverload.jpg', `
-'inv_misc_gem_diamond_03.jpg','inv_fabric_ebonweave.jpg','inv_fabric_moonshroud.jpg','inv_fabric_spellweave.jpg','inv_ingot_titansteel_blue.jpg')
-
-$baseUrl = "https://render.worldofwarcraft.com/us/icons/56/"
+$cooldownName = @('Primal Might','Brilliant Glass','Ebonweave','Moonshroud','Spellweave','Titansteel')
+$cooldownID   = @(29688,47280,56002,56001,56003,55208)
+$cooldownIcon = @('spell_nature_lightningoverload.jpg','inv_misc_gem_diamond_03.jpg','inv_fabric_ebonweave.jpg','inv_fabric_moonshroud.jpg','inv_fabric_spellweave.jpg','inv_ingot_titansteel_blue.jpg')
+$baseUrl      = "https://render.worldofwarcraft.com/us/icons/56/"
 $map = for ($i = 0; $i -lt $cooldownName.count; $i++) {
     [pscustomobject]@{
-        ID = $cooldownID[$i]
+        ID   = $cooldownID[$i]
         Name = $cooldownName[$i]
         Icon = $baseUrl + $cooldownIcon[$i]
     }
 }
 
 # wa data
-$waData = Get-Content -Raw $waLuaPath
 $cdInfo = @()
-$charNames = $charNames | select -Unique
+$waData = Get-Content -Raw $set.waLuaPath
+$set.charNames = $set.charNames | select -Unique
 
-foreach ($server in $realmNames) {
+foreach ($server in $set.realmNames) {
 
-    foreach ($toon in $charNames) {
+    foreach ($toon in $set.charNames) {
 
         foreach ($ID in $cooldownID) {
 
             # regex to match on ID and expiration date (which is when it's CD is up) It's in epoch time
             # Its the expiration
-            # start with getting the correct realm and character
-            $filter = $waData -match '(?smi)(?<=cooldownsDb.*' + $server + '.*' + $toon + '.*' + $ID + '.*expiration\"\]\ = ).*?(\d+\.?\d+)'
-            if ($filter) {
-                $mapMatch = $map | ? {$_.ID -eq $ID}
-                # add expiration info into PS object
-                $cdInfo += [psCustomObject]@{
-                    'name' = $mapMatch.Name
-                    'id'   = $ID
-                    'time' = ([datetimeoffset]::FromUnixTimeSeconds($matches[0])).UtcDateTime
-                    'realm' = $server
-                    'char' = $toon
-                    'icon' = $mapMatch.Icon
-                    'link' = "https://www.wowhead.com/spell=" + $ID
-                    'alertTime' = $alertTime
-                    'interval' = $interval
-                    'intervalTime' = $intervalTime
-                    'keepBuggingMe' = $keepBuggingMe
-                    'discordId' = $discordId
-                    'timeOffset' = ([datetimeoffset]::now).Offset.Hours
+            # start with getting the correct realm and character, filter out keyword cooldowns/characters to prevent false positives for toons without CDs 
+            # capture groups needed: exp numbers,  server->toon, toon->exp
+            $filterServer = $waData -match '(?smi)(?<=cooldownsDb.*?)(' + $server + '.*?' + $toon + '.*?' + $ID + '.*?expiration).*?(\d+\.?\d+)'
+            $filterServerMatch = $matches
+            $filterChar = $filterServerMatch[0] -match '(?smi)(' + $server +').*?(' + $toon + '.*?' + $ID + '.*?expiration).*?(\d+\.?\d+)'
+            $filterCharMatch = $matches
+
+            if ($filterServer -and $filterChar) {
+                $verifyServer = select-string -InputObject $filterServerMatch[0] -pattern "characters" -AllMatches
+                $verifyChar = select-string -InputObject $filterCharMatch[2] -pattern "cooldowns" -AllMatches
+                if ( ($verifyChar.Matches.count -eq 1) -and ($verifyServer.Matches.count -eq 1) ) {
+                    # match is good
+                    $epoch = $filterServerMatch[2]
+                } else {
+                    $epoch = $false
+                }
+
+                if ($epoch) {
+                    $mapMatch = $map | ? {$_.ID -eq $ID}
+                    # add expiration info into PS object
+                    $cdInfo += [psCustomObject]@{
+                        'name' = $mapMatch.Name
+                        'id'   = $ID
+                        'time' = ([datetimeoffset]::FromUnixTimeSeconds($epoch)).UtcDateTime
+                        'realm' = $server
+                        'char' = $toon
+                        'icon' = $mapMatch.Icon
+                        'link' = "https://www.wowhead.com/spell=" + $ID
+                        'alertTime' = $set.alertTime
+                        'interval' = $set.interval
+                        'intervalTime' = $set.intervalTime
+                        'keepBuggingMe' = $set.keepBuggingMe
+                        'discordId' = $set.discordId
+                        'timeOffset' = ([datetimeoffset]::now).Offset.Hours
+                    }
                 }
             }
         }
@@ -245,21 +241,20 @@ foreach ($server in $realmNames) {
 
 if ($cdInfo) {
     # export
-    $cdInfo | Export-Csv -Path $path -Force -NoTypeInformation
+    $cdInfo | Export-Csv -Path $cdPath -Force -NoTypeInformation
 
     # upload
     # needs pwsh to use -Form. Otherwise use curl.exe which was included with win 10 version 17063 (April 2018 update)
     #$form = @{
-    #    data = Get-Item -Path $path
+    #    data = Get-Item -Path $cdPath
     #}
-    #$upload = Invoke-WebRequest -Uri wowcd.ninthwalker.dev?/upload?key=$token -Method Post -Form $form
-    $upload = curl.exe --silent -XPOST -F "data=@$path" https://wowcd.ninthwalker.dev/upload?key=$token
+    #$upload = Invoke-WebRequest -Uri wowcd.ninthwalker.dev?/upload?key=$($set.token) -Method Post -Form $form
+    $upload = curl.exe --silent -XPOST -F "data=@$cdPath" https://wowcd.ninthwalker.dev/upload?key=$($set.token)
     # update modtime to use for existing checks
     if ($upload -eq "Upload successful") {
-        $lastFileUpdate = (Get-Item $waLuaPath).LastWriteTime
-        (Get-Item $path).LastWriteTime = $lastFileUpdate
-    }
-    else {
-        if ($canToast) {New-PopUp -msg "Upload FAILED! Join the discord for help. Error: $upload" -icon "Warning"}
+        $lastFileUpdate = (Get-Item $set.waLuaPath).LastWriteTime
+        (Get-Item $cdPath).LastWriteTime = $lastFileUpdate
+    } elseif ($canToast) {
+        New-PopUp -msg "Upload FAILED! Join the discord for help. Error: $upload" -icon "Warning"
     }
 }

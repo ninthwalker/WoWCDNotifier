@@ -1,0 +1,19 @@
+# WOW CD NOTIFIER SETTINGS
+# See wow_cd_notifier_settings.sample file for examples and descriptions for each section
+# https://github.com/ninthwalker/WoWCDNotifier/blob/main/client/wow_cd_notifier_settings.sample
+# Do not modify the section headers or anything before the equals (=) sign.
+
+[REALM SETTINGS]
+WALuaPath  =
+RealmNames =
+CharNames  =
+
+[DISCORD SETTINGS]
+DiscordId =
+Token     =
+
+[NOTIFICATION SETTINGS]
+AlertTime     = 180
+Interval      = False
+IntervalTime  = 60
+KeepBuggingMe = False
