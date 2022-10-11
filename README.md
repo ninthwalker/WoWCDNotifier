@@ -84,4 +84,4 @@ Please see the sample file for all settings and descriptions for them here: [Sam
 
 ## Screenshots & Videos  
 <p align="center">
-<img align="center" src="https://raw.githubusercontent.com/ninthwalker/github/main/img/wowcdnotifier/wow_cd_notifier_github_img1.png" width="250"></p>
+<img align="center" src="https://raw.githubusercontent.com/ninthwalker/github/main/img/wowcdnotifier/wow_cd_notifier_github_img1.png"></p>
