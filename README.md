@@ -1,8 +1,8 @@
 <p align="center">
-<img align="center" src="https://raw.githubusercontent.com/ninthwalker/WoWCDNotifier/main/img/wotlk_icon.png" width="250">
+<img align="center" src="https://raw.githubusercontent.com/ninthwalker/github/main/img/wowcdnotifier/wotlk_icon.png" width="250"></p>
 
 # WoW CD Notifier
-**WOTLK Classic Cooldown Notifications**  </p>
+**WOTLK Classic Cooldown Notifications**  
 
 Sends a discord notification when a crafting cooldown is availble to use.  
 Current Cooldowns include: Titansteel, Spellcloth, Brilliant Glass, ..  
@@ -38,7 +38,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.  
 
-5. After you have configured the settings file, Double click the 'Install WoW CD Notifier' shortcut. This will create a scheduled task on your computer that will check every 30 minutes for new cooldown times and upload the cooldown data to send you Discord notifications when your cooldowns are ready.  
+5. After you have configured the settings file, Double click the 'Install WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer to check every 30 minutes for new cooldown times to send you Discord notifications when they are ready.  
 
 ## Standalone Version - Setup Instructions  
 
@@ -53,7 +53,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.   
 
-5. After you have configured the settings.txt file, Double click the 'Install WoW CD Notifier - Standalone' shortcut. This will create a scheduled task on your computer that will send you a discord message when your cooldows are ready.  
+5. After you have configured the settings file, Double click the 'Install WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer to check every 30 minutes for new cooldown times to send you Discord notifications when they are ready.  
 
 ## Uninstall  
 
@@ -83,4 +83,5 @@ Please see the sample file for all settings and descriptions for them here: [Sam
 5. Get additional help in the WoW CD Notifier Discord server: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
 
 ## Screenshots & Videos  
-coming soon. Maybe. =)
+<p align="center">
+<img align="center" src="https://raw.githubusercontent.com/ninthwalker/github/main/img/wowcdnotifier/wow_cd_notifier_github_img1.png" width="250"></p>
