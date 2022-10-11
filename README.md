@@ -38,7 +38,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.  
 
-5. After you have configured the settings file, Double click the 'Install WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer to check every 30 minutes for new cooldown times to send you Discord notifications when they are ready.  
+5. After you have configured the settings file, Double click the 'WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer. This will check every 30 minutes for new cooldown times to send you Discord notifications when they are ready!  
 
 ## Standalone Version - Setup Instructions  
 
@@ -53,17 +53,17 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 
 4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.   
 
-5. After you have configured the settings file, Double click the 'Install WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer to check every 30 minutes for new cooldown times to send you Discord notifications when they are ready.  
+5. After you have configured the settings file, Double click the 'WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer to check every 30 minutes for new cooldown times to send you Discord notifications when they are ready.  
 
 ## Uninstall  
 
-1. Doubleclick the 'Uninstall WoW CD Notifier' shortcut link. This will remove the scheduled task.
+1. Doubleclick the 'WoW CD Notifier' shortcut link. Then click the Uninstall button. Too easy!
 
 ## Reconfigure
 
 1. If you want to change the settings, you can do so at any time and the next time the scheduled task runs, it will pick up the new settings.  
 
-2. If you want to change the location of the files, move the files to the new location, and then double click the 'Install WoW CD Notifier' shortcut again from the new location to have the scheduled task updated with the new location.  
+2. If you want to change the location of the files, move the files to the new location, and then double click the 'WoW CD Notifier' shortcut again from the new location and click the Install button again.
 
 
 ## Settings
@@ -75,12 +75,15 @@ Please see the sample file for all settings and descriptions for them here: [Sam
 1. This code is public and available for review. The Data submitted to the server does not contain any personal information, only the crafting cooldown data and your discordID so we know who to send the notification to. If you have an issue with this, then this app probably is not for you. Or you can use the Standalone version if you have a computer on all the time. That is self-contained and does not upload any data.  
 
 2. If you would like the data that is uploaded (cooldown data and discordID) removed at any time, join the WoW CD Notifier discord and make a request in the #support channel. Discord Invite: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
+
+3. If you have issues running the script on your computer, first make sure it is not blocked since it was downloaded from the internet (see step #2 above). Then if scripts are still blocked, open up powershell on your computer and you can type the following command to allow scripts. Note this does allow all scripts to run in the future for you as well:  
+`Set-ExecutionPolicy -Scope Currentuser Bypass`  
  
-3. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
+4. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
 
-4. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!  
+5. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!  
 
-5. Get additional help in the WoW CD Notifier Discord server: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
+6. Get additional help in the WoW CD Notifier Discord server: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
 
 ## Screenshots & Videos  
 <p align="center">
