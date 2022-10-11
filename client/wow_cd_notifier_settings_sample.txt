@@ -1,12 +1,12 @@
 ##################################################
 # WOW CD NOTIFIER SAMPLE SETTINGS AND DESCRIPTIONS
-# Use this for reference, but put your actual settings in the main cd_notifier_settings.txt file, not this one!
+# Use this for reference, but put your actual settings in the main wow_cd_notifier_settings.txt file, not this one!
 # A couple Notes:
 # 1. Do not modify the section headers or anything before the equals (=) sign.
 # 2. No Quotes or anything is needed around your settings. Just put it verbatim.
 # 3. See Examples and if you have any questions, pop in the Discord Server here: 
 # 4. Make sure you also read the main instructions on the github site, as you also need the Weak Aura that goes along with this.
-# 5. Reminder, don't actually use this file, put your settings in the one called: cd_notifier_settings.txt
+# 5. Reminder, don't actually use this file, put your settings in the one called: wow_cd_notifier_settings.txt
 ##################################################
 
 [REALM SETTINGS]
