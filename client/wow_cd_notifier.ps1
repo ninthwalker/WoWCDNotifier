@@ -1,4 +1,4 @@
-﻿####################### WoW Cooldown Notifier ##########################
+####################### WoW Cooldown Notifier ##########################
 # Name: WoW Cooldown Notifier                                          #
 # Desc: Sends Discord Notifications when WoW Crafting Cooldowns are up #
 # Author: Ninthwalker                                                  #
@@ -10,12 +10,12 @@
 ########################### CHANGE LOG #################################
 ## 1.4                                                                 #
 # Updated wotlk spell cooldowns and WA addon naming convention         #
-# Fixed Change log order
+# Fixed Change log order                                               #
 ## 1.3                                                                 #
 # use winform for more user friendliness. I'm such a nice guy!         #
 ## 1.2                                                                 #
 # Use settings file, I think it is easier for the end user             #
-## 1.1
+## 1.1                                                                 #
 # Add windows notifications for some events when run manually          #
 # Refactor mappings                                                    #
 ## 1.0                                                                 #
