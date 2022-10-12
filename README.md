@@ -32,7 +32,7 @@ I tried to make it as simple as possible, but there are a few steps you need to 
 Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)   
 
 3. Download this Github repo to your computer:  
-  a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
+  a. Click the green 'Code' button on this page. Then select 'Download Zip'. ([Or just click here](https://github.com/ninthwalker/WoWCDNotifier/archive/refs/heads/main.zip))  
   b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
   c. Extract the contents of the ZIP file. The files you want are in the 'Client' folder. Make sure these files are kept in the same directory wherever you move them to.  
 
@@ -45,7 +45,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
 1. Install the [weak auras addon](https://www.curseforge.com/wow/addons/weakauras-2) and then import this cooldown tracker addon here: [https://wago.io/sluyr3nQ8](https://wago.io/sluyr3nQ8)  
 
 2. Download this repo to your computer:  
-  a. Click the 'Clone or Download' link on this page. Then select 'Download Zip'  
+  a. Click the green 'Code' button on this page. Then select 'Download Zip'. ([Or just click here](https://github.com/ninthwalker/WoWCDNotifier/archive/refs/heads/main.zip))  
   b. You may need to 'unblock' the zip file downloaded. This is normal behavior for Microsoft Windows to do for files downloaded from the internet. `Right click > Properties > Check 'Unblock'`  
   c. Extract the contents of the ZIP file. The files you want are in the 'Standalone' folder. Make sure these files are kept in the same directory wherever you move them to.   
   
