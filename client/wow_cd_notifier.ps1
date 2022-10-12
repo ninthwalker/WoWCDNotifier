@@ -255,7 +255,7 @@ Function Start-WowCdNotifier {
     # cd mappings
     $cooldownName = @('Alchemy Transmute','Northrend Alchemy Research','Void Sphere','Brilliant Glass','Icy Prism','Ebonweave','Moonshroud','Spellweave','Glacial Bag','Titansteel','Minor Inscription Research','Northrend Inscription Research')
     $cooldownID   = @(54020,60893,28028,47280,62242,56002,56001,56003,56005,55208,61288,61177)
-    $cooldownIcon = @('spell_shadow_manaburn.jpg','trade_alchemy.jpg','inv_enchant_voidsphere.jpg','inv_misc_gem_diamond_03.jpg','inv_misc_gem_diamond_02.jpg','inv_fabric_ebonweave.jpg','inv_fabric_moonshroud.jpg','inv_fabric_spellweave.jpg','inv_misc_bag_enchantedrunecloth.jpg''inv_ingot_titansteel_blue.jpg','inv_inscription_tradeskill01.jpg','inv_inscription_tradeskill01.jpg')
+    $cooldownIcon = @('spell_shadow_manaburn.jpg','trade_alchemy.jpg','inv_enchant_voidsphere.jpg','inv_misc_gem_diamond_03.jpg','inv_misc_gem_diamond_02.jpg','inv_fabric_ebonweave.jpg','inv_fabric_moonshroud.jpg','inv_fabric_spellweave.jpg','inv_misc_bag_enchantedrunecloth.jpg','inv_ingot_titansteel_blue.jpg','inv_inscription_tradeskill01.jpg','inv_inscription_tradeskill01.jpg')
     $baseUrl      = "https://render.worldofwarcraft.com/us/icons/56/"
     $map = for ($i = 0; $i -lt $cooldownName.count; $i++) {
         [pscustomobject]@{
