@@ -51,7 +51,7 @@ Discord Server Invite link: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m
   
 3. Create a Discord Webhook for the channel you want to use for notifications.  
 
-4. Open up the 'wow_cd_notifier_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.   
+4. Open up the 'wow_cd_notifier_standalone_settings.txt' file and configure. Please read the included sample settings file or see down below in the #settings section. Save the file when completed.   
 
 5. After you have configured the settings file, Double click the 'WoW CD Notifier' shortcut. This will open up a little GUI for you to install the WoW CD Notifier app that will create a scheduled task on your computer to check every 30 minutes for new cooldown times to send you Discord notifications when they are ready.  
 
@@ -79,11 +79,13 @@ Please see the sample file for all settings and descriptions for them here: [Sam
 3. If you have issues running the script on your computer, first make sure it is not blocked since it was downloaded from the internet (see step #2 above). Then if scripts are still blocked, open up powershell on your computer and you can type the following command to allow scripts. Note this does allow all scripts to run in the future for you as well:  
 `Set-ExecutionPolicy -Scope Currentuser Bypass`  
  
-4. This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
+4. The Cooldown data is only updated when you /reload or log out of the game. The Scheduled task runs every 30min to then upload that data. So its possible that if you just quickly log on and then log off and turn off the computer within that window that the new cooldown times won't make it to the server.
 
-5. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!  
+5.This does not touch or modify World of Warcraft in any way and conforms to all TOS/EULA.  
 
-6. Get additional help in the WoW CD Notifier Discord server: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
+6. Please put in a github request for any feature requests or if a cooldown you want is not working. Otherwise join us in the discord server for other help. Thanks!  
+
+7. Get additional help in the WoW CD Notifier Discord server: [https://discord.gg/m3kG5qbtvy](https://discord.gg/m3kG5qbtvy)  
 
 ## Screenshots & Videos  
 <p align="center">
