@@ -106,6 +106,7 @@ function Send-Discord {
         [String]$icon,
         [String]$msg,
         [String]$footer,
+        [String]$link,
         [String]$discordWebhook
     )
 
