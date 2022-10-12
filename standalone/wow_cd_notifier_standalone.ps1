@@ -149,7 +149,12 @@ Function Start-WowCdNotifier {
     # create scheduled task if it does not exist
     # uses this code to create the task for you:
     Function New-CdTask {
-        $taskInterval = (New-TimeSpan -Minutes 30)
+        if ($set.interval -eq $True) {
+            $taskIntervalTime = $set.intervalTime
+        } else {
+            $taskIntervalTime = $set.alertTime
+        }
+        $taskInterval = (New-TimeSpan -Minutes $taskIntervalTime)
         $taskTrigger  = New-ScheduledTaskTrigger -Once -At 00:00 -RepetitionInterval $taskInterval
         $taskAction   = New-ScheduledTaskAction -Execute 'mshta' -Argument $taskArgs
         $taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -StartWhenAvailable -DontStopIfGoingOnBatteries
