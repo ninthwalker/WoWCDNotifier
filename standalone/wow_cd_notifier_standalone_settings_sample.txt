@@ -1,0 +1,48 @@
+##################################################
+# WOW CD NOTIFIER SAMPLE SETTINGS AND DESCRIPTIONS
+# Use this for reference, but put your actual settings in the main wow_cd_notifier_standalone_settings.txt file, not this one!
+# A couple Notes:
+# 1. Do not modify the section headers or anything before the equals (=) sign.
+# 2. No Quotes or anything is needed around your settings. Just put it verbatim.
+# 3. See Examples and if you have any questions, pop in the Discord Server here: https://discord.gg/m3kG5qbtvy
+# 4. Make sure you also read the main instructions on the github site, as you also need the Weak Aura that goes along with this.
+# 5. Reminder, don't actually use this file, put your settings in the one called: wow_cd_notifier_standalone_settings.txt
+##################################################
+
+[REALM SETTINGS]
+
+# Enter the full path to the WeakAuras.lua file on your computer
+# normally under: ..\World of Warcraft\_classic_\WTF\Account\<ACCOUNT_NAME>\SavedVariables\WeakAuras.lua"
+WALuaPath  = C:\Program Files (x86)\World of Warcraft\_classic_\WTF\Account\<ACCOUNT_NAME>\SavedVariables\WeakAuras.lua
+
+# Enter in the realm name(s) to check. Add more with a comma separating the server names. No spaces. ie: Whitemane,Skyfury,etc
+RealmNames = Whitemane
+
+# Enter in the character name(s) to check for cooldowns
+# Only enter each character name once. ie: if you have a character named 'Joe' on realm1 and realm2 to check, only list 'Joe' once below.
+# ie for one char: SliceAndDice
+# For multiple char's, separate them with a comma. No Spaces. ie: SliceAndDice,MySecondToon,ImAnAltaholic
+CharNames  = SliceAndDice,Jester
+
+[DISCORD SETTINGS]
+
+# Discordwebhook. Set up your own discord server and channel and create a webhook for it.
+DiscordWebhook = https://discord.com/api/webhooks/your webhook here
+
+[NOTIFICATION SETTINGS]
+
+# Enter time (in minutes) for how far before your CD is ready to start alerting you.
+# defailt is to alert 3 hrs before your CD is ready (180 min)
+AlertTime     = 180
+
+# how often do you want to keep being alerted? Setting this to True will keep alerting you every 'intervalTime'.
+# (in minutes, lowest value is 10, and maximum would be the 'alertTime' you set above)
+# ie: if 'alertTime' is set to 180 (3hrs) and you set this to 60 (1hr), you would receive an alert 3hrs before, then every hour after.
+# set interval to True to enable or False to only alert once when the 'alertTime' is met. Default is False
+Interval      = False
+IntervalTime  = 60
+
+# Continous alerting. Set 'keepBuggingMe' to True if you want an alert every set 'intervalTime' even after your cooldown is ready.
+Will keep bugging you for each interval up to one day past it's CD.
+# this requires that interval is set above to True. Default is False
+KeepBuggingMe = False
