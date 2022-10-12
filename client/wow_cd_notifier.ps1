@@ -3,20 +3,23 @@
 # Desc: Sends Discord Notifications when WoW Crafting Cooldowns are up #
 # Author: Ninthwalker                                                  #
 # Instructions: https://github.com/ninthwalker/WoWCDNotifier           #
-# Date: 11OCT2022                                                      #
-# Version: 1.3                                                         #
+# Date: 12OCT2022                                                      #
+# Version: 1.4                                                         #
 ########################################################################
 
 ########################### CHANGE LOG #################################
-## 1.0                                                                 #
-# Initial App release                                                  #
-## 1.1                                                                 #
-# Add windows notifications for some events when run manually          #
-# Refactor mappings                                                    #
-## 1.2                                                                 #
-# Use settings file, I think it is easier for the end user             #
+## 1.4                                                                 #
+# Updated wotlk spell cooldowns and WA addon naming convention         #
+# Fixed Change log order
 ## 1.3                                                                 #
 # use winform for more user friendliness. I'm such a nice guy!         #
+## 1.2                                                                 #
+# Use settings file, I think it is easier for the end user             #
+## 1.1
+# Add windows notifications for some events when run manually          #
+# Refactor mappings                                                    #
+## 1.0                                                                 #
+# Initial App release                                                  #
 ########################################################################
  
 ######################### NOTES FOR USER ###############################
@@ -39,7 +42,7 @@ param ([switch]$runFromTask)
 if (!$runFromTask) {$canToast = $True}
 
 # script version
-$version = "v1.3"
+$version = "v1.4"
 
 # paths of this script
 $scriptDir = $PSScriptRoot
@@ -100,12 +103,14 @@ Function Start-Debug {
 # wowcdnotifier funcion
 Function Start-WowCdNotifier {
 
-    # Disable buttons and clear status
-    $button_install.Enabled = $False
-    $label_status.ForeColor = "#ffff00"
-    $label_status.text = "Installing .."
-    $label_status.Refresh()
-    Start-Sleep -Seconds 1
+    if ($canToast) {
+        # Disable buttons and clear status
+        $button_install.Enabled = $False
+        $label_status.ForeColor = "#ffff00"
+        $label_status.text = "Installing .."
+        $label_status.Refresh()
+        Start-Sleep -Seconds 1
+    }
 
     # create scheduled task if it does not exist
     # uses this code to create the task for you:
@@ -132,11 +137,13 @@ Function Start-WowCdNotifier {
     if (Test-Path $scriptDir\wow_cd_notifier_settings.txt) {
         $set = Get-Settings $scriptDir\wow_cd_notifier_settings.txt
     } else {
-        New-PopUp -msg "Couldn't find settings file. Please check settings!" -icon "Warning"
-        $label_status.ForeColor = "#ffff00"
-        $label_status.text = "Couldn't find settings file.`r`nPlease Check settings and try again."
-        $label_status.Refresh()
-        $button_install.Enabled = $True
+        if ($canToast) {
+            New-PopUp -msg "Couldn't find settings file. Please check settings!" -icon "Warning"
+            $label_status.ForeColor = "#ffff00"
+            $label_status.text = "Couldn't find settings file.`r`nPlease Check settings and try again."
+            $label_status.Refresh()
+            $button_install.Enabled = $True
+        }
         Return
     }
 
@@ -152,8 +159,8 @@ Function Start-WowCdNotifier {
             $label_status.text = "Missing Settings! Please fix:`r`n$settingsCheck"
             $label_status.Refresh()
             $button_install.Enabled = $True
-            Return
         }
+        Return
     }
 
     # only run this section if its NOT being run from the scheduled task. sets up the scheduled task
@@ -246,9 +253,9 @@ Function Start-WowCdNotifier {
     }
 
     # cd mappings
-    $cooldownName = @('Primal Might','Brilliant Glass','Ebonweave','Moonshroud','Spellweave','Titansteel')
-    $cooldownID   = @(29688,47280,56002,56001,56003,55208)
-    $cooldownIcon = @('spell_nature_lightningoverload.jpg','inv_misc_gem_diamond_03.jpg','inv_fabric_ebonweave.jpg','inv_fabric_moonshroud.jpg','inv_fabric_spellweave.jpg','inv_ingot_titansteel_blue.jpg')
+    $cooldownName = @('Alchemy Transmute','Northrend Alchemy Research','Void Sphere','Brilliant Glass','Icy Prism','Ebonweave','Moonshroud','Spellweave','Glacial Bag','Titansteel','Minor Inscription Research','Northrend Inscription Research')
+    $cooldownID   = @(54020,60893,28028,47280,62242,56002,56001,56003,56005,55208,61288,61177)
+    $cooldownIcon = @('spell_shadow_manaburn.jpg','trade_alchemy.jpg','inv_enchant_voidsphere.jpg','inv_misc_gem_diamond_03.jpg','inv_misc_gem_diamond_02.jpg','inv_fabric_ebonweave.jpg','inv_fabric_moonshroud.jpg','inv_fabric_spellweave.jpg','inv_misc_bag_enchantedrunecloth.jpg''inv_ingot_titansteel_blue.jpg','inv_inscription_tradeskill01.jpg','inv_inscription_tradeskill01.jpg')
     $baseUrl      = "https://render.worldofwarcraft.com/us/icons/56/"
     $map = for ($i = 0; $i -lt $cooldownName.count; $i++) {
         [pscustomobject]@{
@@ -273,7 +280,7 @@ Function Start-WowCdNotifier {
                 # Its the expiration
                 # start with getting the correct realm and character, filter out keyword cooldowns/characters to prevent false positives for toons without CDs 
                 # capture groups needed: exp numbers,  server->toon, toon->exp
-                $filterServer = $waData -match '(?smi)(?<=cooldownsDb.*?)(' + $server + '.*?' + $toon + '.*?' + $ID + '.*?expiration).*?(\d+\.?\d+)'
+                $filterServer = $waData -match '(?smi)(?<=\[\"WoWCDNotifier\"\].*?)(' + $server + '.*?' + $toon + '.*?' + $ID + '.*?expiration).*?(\d+\.?\d+)'
                 $filterServerMatch = $matches
                 $filterChar = $filterServerMatch[0] -match '(?smi)(' + $server +').*?(' + $toon + '.*?' + $ID + '.*?expiration).*?(\d+\.?\d+)'
                 $filterCharMatch = $matches
@@ -327,15 +334,20 @@ Function Start-WowCdNotifier {
         if ($upload -eq "Upload successful") {
             $lastFileUpdate = (Get-Item $set.waLuaPath).LastWriteTime
             (Get-Item $cdPath).LastWriteTime = $lastFileUpdate
-        } elseif ($canToast) {
-            New-PopUp -msg "Upload FAILED! Join the discord for help. Error: $upload" -icon "Warning"
-            $label_status.ForeColor = "#ff0000"
-            $label_status.text = "Upload Failed!`r`nClick the Discord link below to get help."
-            $label_status.Refresh()
-            $button_install.Enabled = $True
+        } else {
+            if ($canToast) {
+                New-PopUp -msg "Upload FAILED! Join the discord for help. Error: $upload" -icon "Warning"
+                $label_status.ForeColor = "#ff0000"
+                $label_status.text = "Upload Failed!`r`nClick the Discord link below to get help."
+                $label_status.Refresh()
+                $button_install.Enabled = $True
+            }
+            Return
         }
     }
 }
+# run it if from task
+if ($runFromTask) {Start-WowCdNotifier}
 
 # remove task
 Function Remove-WoWCdNotifier {
@@ -366,7 +378,7 @@ Function Remove-WoWCdNotifier {
     Return
 }
 
-    if ($canToast) {
+if ($canToast) {
     # Form section
     Add-Type -AssemblyName System.Windows.Forms, PresentationFramework, PresentationCore, WindowsBase, System.Drawing
     [System.Windows.Forms.Application]::EnableVisualStyles()
