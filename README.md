@@ -1,7 +1,7 @@
 <p align="center">
 <img align="center" src="https://raw.githubusercontent.com/ninthwalker/github/main/img/wowcdnotifier/wotlk_icon.png" width="250"></p>
 
-# WoW CD Notifier
+# WoW Cooldown Notifier
 **WOTLK Classic Cooldown Notifications**  
 
 Sends a discord notification when a crafting cooldown is availble to use.  
