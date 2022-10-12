@@ -1,0 +1,211 @@
+-- Do not remove this comment, it is part of this aura: Character Names
+local aura_env = aura_env
+
+local thisRealm = GetRealmName();
+local db;
+local reset_all = 2;
+local updateFrequency = 1;
+local timePast = 0;
+
+if WeakAurasSaved.WoWCDNotifier then
+    db = WeakAurasSaved.WoWCDNotifier;
+else
+    WeakAurasSaved.WoWCDNotifier = WeakAurasSaved.WoWCDNotifier or {};
+    db = WeakAurasSaved.WoWCDNotifier;
+end
+
+-- remove cooldown data
+function resetData()
+	if aura_env.config["resetAll"] == reset_all then
+		WeakAurasSaved.WoWCDNotifier = {};
+		print("WoW Cooldown Notifier Data has been reset!")
+		return;
+	end
+end
+
+aura_env.TriggerCharacterNames = function(allStates)
+    if timePast and GetTime() <= timePast then
+        return;
+    end
+    timePast = GetTime() + updateFrequency;
+
+    for characterName, characterData in pairs(db[thisRealm].characters) do
+        local count = 0
+        for _ in pairs(characterData.cooldowns) do
+            count = count + 1;
+        end
+        if count > 0 then
+            allStates[characterName] = {
+                characterName = characterName,
+                name = characterName,
+                show = true,
+                changed = true,
+                isLabel = true
+            }
+        end
+    end
+    
+    return true
+end
+
+-- Do not remove this comment, it is part of this aura: Tracker
+local aura_env = aura_env
+
+local spells = {
+    [56002] = {label = "Ebonweave", icon = 237022},
+    [56001] = {label = "Moonshroud", icon = 237025},
+    [56003] = {label = "Spellweave", icon = 237026},
+    [55208] = {label = "Titansteel", icon = 237046},
+    [60893] = {label = "Northrend Alchemy Research", icon = 136240},
+    [54020] = {label = "Alchemy Transmute", icon = 136170},
+    [28028] = {label = "Void Sphere", icon = 132886},
+    [47280] = {label = "Brilliant Glass", icon = 134096},
+    [62242] = {label = "Icy Prism", icon = 134095},
+    [56005] = {label = "Glacial Bag", icon = 133666},
+    [61288] = {label = "Minor Inscription Research", icon = 237171},
+    [61177] = {label = "Northrend Inscription Research", icon = 237171}  
+};
+local thisToon = UnitName("player");
+local thisRealm = GetRealmName();
+local db;
+
+local updateFrequency = 1;
+local timePast = 0;
+
+if WeakAurasSaved.WoWCDNotifier then
+    db = WeakAurasSaved.WoWCDNotifier;
+else
+    WeakAurasSaved.WoWCDNotifier = WeakAurasSaved.WoWCDNotifier or {};
+    db = WeakAurasSaved.WoWCDNotifier;
+end
+
+-- Functions Start
+
+aura_env.TriggerCooldowns = function(allStates)
+    if timePast and GetTime() <= timePast then
+        return;
+    end
+    timePast = GetTime() + updateFrequency;
+
+    local realm = db[thisRealm] or {characters = {}};
+    local character = realm.characters[thisToon] or {cooldowns = {}};
+    CooldownsUpdate(realm, character);
+    SetDisplayData(allStates);
+	
+    return true;
+end
+
+function CooldownsUpdate(realm, character)
+    for spellId, _ in pairs(spells) do
+        UpdateSpellData(spellId, character);
+    end
+    realm.characters[thisToon] = character;
+    db[thisRealm] = realm;
+	resetData();
+end
+
+
+function UpdateSpellData(spellId, character)
+    local spellData = character.cooldowns[spellId] or {}
+    
+    if IsPlayerSpell(spellId) then
+        local start, duration
+        start, duration = GetSpellCooldown(spellId)
+        
+        local now = GetTime()
+        start = start or 0
+        duration = duration or 0
+        -- fix huge values
+        if duration > 604800 then
+            start = 0
+            duration = 0
+        end
+        if start > now + 2147483.648 then
+            start = start - 4294967.296
+        end
+        -- ignore GCD
+        if WeakAuras.gcdDuration() ~= 0 then return end
+        
+        local dt = now - start
+        local serverStart = GetServerTime() - dt
+        local serverExpiration = serverStart + duration
+        
+        spellData = {
+            start = start,
+            duration = duration,
+            expiration = serverExpiration,
+            gcdDuration = WeakAuras.gcdDuration(),
+            now = GetTime(),
+            serverTime = GetServerTime(),
+        }
+    else
+        spellData = nil
+    end
+    
+    character.cooldowns[spellId] = spellData
+end
+
+function SetDisplayData(allStates)
+    for characterName, character in pairs(db[thisRealm].characters) do
+        for spellId, spellData in pairs(character.cooldowns) do
+            local spellInfo = spells[spellId]
+            if spellInfo then
+                local localExpiration = spellData.expiration - GetServerTime() + GetTime()
+                local name = characterName .. " - " .. spellInfo.label;
+                local ready = localExpiration <= GetTime()
+                local remainingTime = math.max(0, localExpiration - GetTime())
+                allStates[name] = {
+                    characterName = characterName,
+                    spellId = spellId,
+                    changed = true,
+                    show = true,
+                    name = spellInfo.label,
+                    icon = spellInfo.icon,
+                    duration = spellData.duration,
+                    expirationTime = localExpiration,
+                    value = remainingTime,
+                    total = spellInfo.maxDuration,
+                    ready = ready,
+                    isLabel = false
+                }
+            else
+                character.cooldowns[spellId] = nil
+            end
+        end
+    end
+end
+
+aura_env.GetDuration = function()
+    local expiration = aura_env.state.expirationTime
+    if expiration ~= 0 and expiration > GetTime() then
+        local seconds = math.floor(expiration - GetTime())
+        local days = math.floor(seconds/86400)
+        local hours = 0;
+        local minutes = 0;
+        if (days > 0) then
+            hours = math.floor((seconds/86400 - days) * 24)
+        else
+            hours = math.floor((seconds/86400 - days) * 24)
+            minutes = math.floor((seconds/86400 - days - hours/24) * 24 * 60)
+        end
+        
+        local time = ""
+        if days > 0 then
+            time = string.format("%dd",days)
+        end
+        if hours > 0 then
+            time = string.format("%s %dh",time,hours)
+        end
+        if minutes > 0 then
+            time = string.format("%s %dm",time,minutes)
+        end
+        return time
+    end
+    return "Ready"
+end
+
+--/cast Alchemy
+--/run for i=1,GetNumTradeSkills() do if GetTradeSkillInfo(i)=="Transmute: Arcanite" then CloseTradeSkill() DoTradeSkill(i, 1) break end end
+
+
+
